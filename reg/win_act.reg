@@ -1,0 +1,18 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion]
+"CurrentBuild"="1.511.1 () (Obsolete data - do not use)"
+"ProductId"="55274-640-1011873-23803"
+"DigitalProductId"=hex:a4,00,00,00,03,00,00,00,35,35,32,37,34,2d,36,34,30,2d,\
+  31,30,31,31,38,37,33,2d,32,33,38,30,33,00,2e,00,00,00,41,32,32,2d,30,30,30,\
+  30,31,00,00,00,00,00,00,00,86,56,4e,4c,21,1b,2b,6a,a3,78,8e,8f,98,5c,00,00,\
+  00,00,00,00,38,ce,8a,44,ff,a5,01,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,35,31,30,30,35,00,00,00,00,00,00,00,b2,16,\
+  00,00,ef,77,1b,f0,f8,01,00,00,8a,17,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+  00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,7c,ae,f7,e0
+"LicenseInfo"=hex:33,8f,a0,59,12,e6,bb,ad,20,69,0f,d3,42,b3,fd,a1,d2,2c,2e,bc,\
+  20,fb,f8,7d,19,8b,3d,43,fe,54,99,42,4c,43,15,c7,cc,d4,fa,45,5d,bd,4e,cd,be,\
+  bb,63,c3,b9,31,fb,99,d2,8f,2f,61
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WPAEvents]
+"OOBETimer"=hex:ff,d5,71,d6,8b,6a,8d,6f,d5,33,93,fd

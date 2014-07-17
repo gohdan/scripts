@@ -1,0 +1,1 @@
+netsh exec d:\netcfg\home.cfg
