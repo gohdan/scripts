@@ -3,7 +3,7 @@
 # via http://searchengines.guru/showthread.php?t=136923
 
 # указываем путь к HTML-файлу
-$file = "/home/gohdan/work/tamak/db_ru/db_tamak2.sql";
+$file = "file.html";
 
 # читаем HTML-файл и пишем все в массив
 open (FILE,"<$file"); @html=<FILE>; close(FILE);
