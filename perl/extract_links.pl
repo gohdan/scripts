@@ -2,8 +2,8 @@
 
 # via http://searchengines.guru/showthread.php?t=136923
 
-# указываем путь к HTML-файлу
-$file = "file.html";
+# файл получаем как аргумент командной строки
+$file = $ARGV[0];
 
 # читаем HTML-файл и пишем все в массив
 open (FILE,"<$file"); @html=<FILE>; close(FILE);
