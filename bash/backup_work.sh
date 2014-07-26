@@ -7,7 +7,7 @@ ARCHPSW=***
 
 DATE=`date "+%Y-%m-%d"`
 
-#find $BACKUP -mtime +3 -exec rm -rf {} \;
+find $BACKUP -mtime +7 -exec rm -rf {} \;
 
 for DIR in "work" "docs"; do
 	mkdir -p $BACKUP/$DATE/$DIR
