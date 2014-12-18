@@ -1,0 +1,9 @@
+#!/usr/bin/expect
+
+set HOST [lrange $argv 0 0]
+
+spawn telnet $HOST 4949
+expect "munin node"
+send "fetch load\n"
+expect "."
+send "quit\n"
