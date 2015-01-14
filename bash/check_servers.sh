@@ -52,7 +52,14 @@ function check_service()
         then
                 if [ "1" == "$DEBUG" ]; then echo "service is not running, trying to restart"; fi
 
-                restart=`/sbin/service $service restart`
+                /sbin/service $service stop
+
+                for i in `ps -A | grep $service`; do
+                        pid=`echo $i | awk '{ print $1 }'`
+                        kill -s 9 $pid
+                done
+
+                /sbin/service $service start
 
                 get_server_status $service
                 if_running=$?
@@ -65,7 +72,7 @@ function check_service()
 
                 message="`hostname`: $service is not running! Restarted: $if_success"
 
-                echo $message | mail -s "Tamboff.ru: service is not running" root
+                echo $message | mail -s "`hostname`: service is not running" root
         fi
 }
 
