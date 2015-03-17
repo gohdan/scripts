@@ -6,4 +6,8 @@ spawn telnet $HOST 4949
 expect "munin node"
 send "fetch load\n"
 expect "."
+#set results $expect_out(buffer)
 send "quit\n"
+#exec echo $results > /tmp/tmpfile.txt
+expect eof
+

@@ -4,7 +4,7 @@ DIR=/opt/check_vm
 EXPECTSCRIPT="$DIR/telnet_script"
 TMPFILE=/tmp/check_vm_telnet_log.txt
 DELAY=10
-LA_THRESHOLD=90
+LA_THRESHOLD=30
 
 VMS=(
         apache
@@ -14,9 +14,9 @@ function restart_vm()
 {
         VM=$1
 
-        echo "trying to shutdown"
-        /usr/bin/virsh shutdown $VM
-        sleep $DELAY
+        #echo "trying to shutdown"
+        #/usr/bin/virsh shutdown $VM
+        #sleep $DELAY
         echo "trying to destroy"
         /usr/bin/virsh destroy $VM
         sleep $DELAY
