@@ -13,10 +13,11 @@ then
 	DIR="."
 fi
 
-echo $DIR
+FILE=/tmp/files
+find $DIR -type f > $FILE
 
 FLOOR=1
-RANGE=`ls $DIR | wc -l`
+RANGE=`wc -l $FILE | awk '{print $1}'`
 number=0   #initialize
 while [ "$number" -le $FLOOR ]
 do
@@ -24,16 +25,11 @@ do
   let "number %= $RANGE"  # Ограничение "сверху" числом $RANGE.
 done
 
-j=0
-for i in `ls $DIR`; do
-	j=`echo $j+1 | bc`
-	#echo $j
-	if [ "$j" -eq "$number" ]
-	then
-		mplayer $DIR/$i
-		break
-	fi
-done
+FILENAME=`head -n $number $FILE | tail -n 1`
+
+mplayer $FILENAME
+
+rm $FILE
 
 IFS=$ORIGIFS
 OFS=$ORIGOFS
