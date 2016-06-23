@@ -7,9 +7,9 @@ FTPURL="ftp://$USER:$PASS@$HOST"
 LCD="backup"
 RCD="backup"
 
-FILE1=`find $LCD/apache/ -type f -exec stat -c "%Y %n" {} \; | sort -n | head -1 | cut -d' ' -f2`
+FILE1=`find $LCD/apache/ -type f -exec stat -c "%Y %n" {} \; | sort -n | tail -1 | cut -d' ' -f2`
 
-FILE2=`find $LCD/mysql/ -type f -exec stat -c "%Y %n" {} \; | sort -n | head -1 | cut -d' ' -f2`
+FILE2=`find $LCD/mysql/ -type f -exec stat -c "%Y %n" {} \; | sort -n | tail -1 | cut -d' ' -f2`
 
 
 FILES=( $FILE1 $FILE2 );
