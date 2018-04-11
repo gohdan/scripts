@@ -9,6 +9,6 @@ BACKUPS=dumps
 for DBNAME in `$CLT -h$SQLHOST --execute='show databases' -N -s `
 do
 echo 'dumping '$DBNAME
-$DUMP -R -E -h$SQLHOST $DBNAME >$BACKUPS$DBNAME.sql
+$DUMP -R -E -h$SQLHOST $DBNAME >$BACKUPS/$DBNAME.sql
 done
 
