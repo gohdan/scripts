@@ -21,7 +21,7 @@ then
         if [ "$PS" != "$DBNAME" ]
         then
 
-	        FILENAME=$BACKUPS/$DBNAME.$CURDATE.sql
+	        FILENAME=$BACKUPS/$DBNAME_$CURDATE.sql
     	    echo 'dumping '$DBNAME' to '$FILENAME
         	$DUMP -RE -h$SQLHOST -P $PORT -u$USR $DBNAME > $FILENAME
 	        bzip2 $FILENAME
