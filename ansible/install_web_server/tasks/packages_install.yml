@@ -1,0 +1,34 @@
+- name: Update packages list
+  apt: update_cache=yes
+  when: ansible_os_family == 'Debian'
+
+- name: Check packages
+  when: ansible_os_family == 'Debian'
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - apg
+    - apt-transport-https
+    - apt-utils
+    - aptitude
+    - bzip2
+    - ca-certificates
+    - ftp
+    - git
+    - htop
+    - iotop
+    - logrotate
+    - man-db
+    - mc
+    - ncdu
+    - p7zip
+    - sshfs
+    - sudo
+    - sysstat
+    - telnet
+    - tmux
+    - vim
+    - zip
+    - unzip

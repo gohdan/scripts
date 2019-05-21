@@ -1,0 +1,55 @@
+- name: Install nginx package
+  when: ansible_os_family == 'Debian'
+  apt:
+    name: nginx
+    state: present
+
+- name: Set default nginx config
+  copy:
+    src: config/nginx/nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Remove symlink to default site config
+  file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
+
+- name: Remove default site config
+  file:
+      path: /etc/nginx/sites-available/default
+      state: absent
+
+- name: Get wordpess config
+  unarchive:
+    remote_src: yes
+    src: https://github.com/gohdan/wordpress_cache/archive/master.zip
+    dest: /tmp/
+
+- name: Check if wordpress config dir exist
+  stat: path=/tmp/wordpress_cache-master/nginx/wordpress_cache
+  register: wc_cache_stat
+
+- name: Create wordpress cache folder
+  when: wc_cache_stat.stat.exists
+  file:
+      path: /etc/nginx/wordpress_cache
+      state: directory
+      mode: '0755'
+
+- name: Move wordpress cache to nginx folder
+  when: wc_cache_stat.stat.exists
+  shell: mv -b /tmp/wordpress_cache-master/nginx/wordpress_cache/* /etc/nginx/wordpress_cache
+
+- name: Remove wordpress cache config
+  file:
+      path: /tmp/wordpress_cache-master
+      state: absent
+
+- name: Restart nginx
+  systemd:
+    name: nginx
+    state: restarted

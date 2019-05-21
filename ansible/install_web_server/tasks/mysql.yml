@@ -1,0 +1,23 @@
+- name: Install mysql packages
+  when: ansible_os_family == 'Debian'
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - mysql-server
+    - mysql-client
+
+- name: Set default mysql config
+  copy:
+    src: config/mysql/mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Restart mysql
+  systemd:
+    name: mysql
+    state: restarted

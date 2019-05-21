@@ -1,0 +1,53 @@
+- name: Add php repository
+  apt_repository:
+    repo: "ppa:ondrej/php"
+    state: present
+
+- name: Update packages list
+  apt: update_cache=yes
+  when: ansible_os_family == 'Debian'
+
+- name: Install php packages
+  when: ansible_os_family == 'Debian'
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+        - php7.1-bcmath
+        - php7.1-cli
+        - php7.1-common
+        - php7.1-fpm
+        - php7.1-gd
+        - php7.1-intl
+        - php7.1-json
+        - php7.1-mbstring
+        - php7.1-mcrypt
+        - php7.1-mysql
+        - php7.1-opcache
+        - php7.1-xml
+        - php7.1-xsl
+        - php7.1-zip
+
+- name: Set default php-cli config
+  copy:
+    src: config/php/cli/php.ini
+    dest: /etc/php/7.1/cli/php.ini
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Set default php-fpm config
+  copy:
+    src: config/php/fpm/php.ini
+    dest: /etc/php/7.1/fpm/php.ini
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Restart php-fpm
+  systemd:
+    name: php7.1-fpm.service
+    state: restarted

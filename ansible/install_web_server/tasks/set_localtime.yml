@@ -1,0 +1,8 @@
+- name: Set local time
+  file:
+    src: '/usr/share/zoneinfo/Europe/Moscow'
+    dest: '/etc/localtime'
+    owner: root
+    group: root
+    state: link
+    force: yes

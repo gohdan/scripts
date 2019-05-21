@@ -1,0 +1,1 @@
+new_server ansible_host=xx.xx.xx.xx ansible_user=root

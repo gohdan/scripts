@@ -1,0 +1,12 @@
+- name: Prepare new server
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - import_tasks: tasks/make_swap.yml
+    - import_tasks: tasks/set_locale.yml
+    - import_tasks: tasks/set_localtime.yml
+    - import_tasks: tasks/update_scripts.yml
+    - import_tasks: tasks/packages_update_cache.yml
+    - import_tasks: tasks/packages_install.yml
+    

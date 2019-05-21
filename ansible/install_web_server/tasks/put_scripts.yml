@@ -1,0 +1,62 @@
+- name: Copy logrotate config
+  copy:
+    src: config/logrotate/homes
+    dest: /etc/logrotate.d/homes
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Create scripts folder
+  file:
+      path: /root/scripts
+      state: directory
+      mode: '0755'
+
+- name: Copy site creation scripts
+  copy:
+    src: scripts/add_site.sh
+    dest: /root/scripts/add_site.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Copy site deletion scripts
+  copy:
+    src: scripts/del_site.sh
+    dest: /root/scripts/del_site.sh
+    owner: root
+    group: root
+    mode: '0755'
+    backup: yes
+
+
+- name: Copy fpm conf template
+  copy:
+    src: scripts/conf_templates/fpm.conf
+    dest: /root/scripts/conf_templates/fpm.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Copy nginx precert conf template
+  copy:
+    src: scripts/conf_templates/nginx_template_precert.conf
+    dest: /root/scripts/conf_templates/nginx_template_precert.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+
+- name: Copy nginx final conf template
+  copy:
+    src: scripts/conf_templates/nginx_template_ssl.conf
+    dest: /root/scripts/conf_templates/nginx_template_ssl.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+

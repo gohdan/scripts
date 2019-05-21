@@ -1,0 +1,32 @@
+- name: Install certbot package
+  when: ansible_os_family == 'Debian'
+  apt:
+    name: certbot
+    state: present
+
+- name: Create scripts folder
+  file:
+      path: /root/scripts
+      state: directory
+      mode: '0755'
+
+- name: Copy certs renew script
+  copy:
+    src: scripts/certs_renew.sh
+    dest: /root/scripts/certs_renew.sh
+    owner: root
+    group: root
+    mode: '0755'
+    backup: yes
+
+- name: Make symlink of certs renew to cron daily
+  file:
+    src: '/root/scripts/certs_renew.sh'
+    dest: '/etc/cron.daily/certs-renew'
+    owner: root
+    group: root
+    state: link
+    force: yes
+
+- name: Register account
+  shell: certbot register -n --agree-tos -m admin@example.org

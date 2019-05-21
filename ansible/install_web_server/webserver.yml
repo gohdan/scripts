@@ -1,0 +1,12 @@
+- name: Install web server
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - import_tasks: tasks/packages_update_cache.yml
+    - import_tasks: tasks/nginx.yml
+    - import_tasks: tasks/php.yml
+    - import_tasks: tasks/mysql.yml
+    - import_tasks: tasks/put_scripts.yml
+    - import_tasks: tasks/certbot.yml
+

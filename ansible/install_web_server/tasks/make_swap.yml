@@ -1,0 +1,10 @@
+- name: Creates swap
+  shell: |
+    dd if=/dev/zero of=/swapfile bs=1M count=2048
+    chmod 0600 /swapfile
+    mkswap /swapfile
+    swapon /swapfile
+    echo "/swapfile none swap sw 0 0" >> /etc/fstab
+    exit 0
+  args:
+    creates: /swapfile
