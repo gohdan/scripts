@@ -170,6 +170,7 @@ echo ''
 
 
 debug "end"
+DT=`date "+%Y-%m-%d_%H-%M"`
 debug ${DT}
 
 IFS=$ORIGIFS
