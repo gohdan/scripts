@@ -6,6 +6,7 @@ ORIGOFS=$OFS
 IFS=$(echo -en "\n\b")
 OFS=$(echo -en "\n\b")
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 LOG="/var/log/scripts/add_site.log"
 DT=`date "+%Y-%m-%d_%H-%M"`
 
@@ -116,7 +117,7 @@ find /home/${USER_NAME}/ -type d -exec chmod a+x {} \;
 # Write php-fpm config
 
 config_file="/etc/php/7.1/fpm/pool.d/${DOMAIN_NAME}.conf"
-cp conf_templates/fpm.conf ${config_file}
+cp ${DIR}/conf_templates/fpm.conf ${config_file}
 sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file;
 sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file;
 systemctl restart php7.1-fpm
@@ -125,7 +126,7 @@ systemctl restart php7.1-fpm
 
 config_file="/etc/nginx/sites-available/${DOMAIN_NAME}.conf"
 
-cp conf_templates/nginx_template_precert.conf ${config_file}
+cp ${DIR}/conf_templates/nginx_template_precert.conf ${config_file}
 sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file;
 sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file;
 
@@ -138,7 +139,7 @@ certbot certonly -n --webroot -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME} -w /home/$
 
 # Write nginx final config
 
-cp conf_templates/nginx_template_ssl.conf ${config_file}
+cp ${DIR}/conf_templates/nginx_template_ssl.conf ${config_file}
 sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file;
 sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file;
 systemctl restart nginx
