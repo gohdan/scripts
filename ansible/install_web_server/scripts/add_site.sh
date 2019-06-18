@@ -118,8 +118,8 @@ find /home/${USER_NAME}/ -type d -exec chmod a+x {} \;
 
 config_file="/etc/php/7.1/fpm/pool.d/${DOMAIN_NAME}.conf"
 cp ${DIR}/conf_templates/fpm.conf ${config_file}
-sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file;
-sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file;
+sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file
+sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file
 systemctl restart php7.1-fpm
 
 # Write nginx simple config
@@ -127,8 +127,8 @@ systemctl restart php7.1-fpm
 config_file="/etc/nginx/sites-available/${DOMAIN_NAME}.conf"
 
 cp ${DIR}/conf_templates/nginx_template_precert.conf ${config_file}
-sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file;
-sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file;
+sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file
+sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file
 
 ln -s ${config_file} /etc/nginx/sites-enabled/${DOMAIN_NAME}.conf
 systemctl restart nginx
@@ -140,8 +140,8 @@ certbot certonly -n --webroot -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME} -w /home/$
 # Write nginx final config
 
 cp ${DIR}/conf_templates/nginx_template_ssl.conf ${config_file}
-sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file;
-sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file;
+sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file
+sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file
 systemctl restart nginx
 
 
