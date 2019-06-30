@@ -1,6 +1,17 @@
 - name: Copy logrotate config
+  when: ansible_os_family == 'Debian'
   copy:
-    src: config/logrotate/homes
+    src: config/logrotate/homes_debian
+    dest: /etc/logrotate.d/homes
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Copy logrotate config
+  when: ansible_os_family == 'RedHat'
+  copy:
+    src: config/logrotate/homes_redhat
     dest: /etc/logrotate.d/homes
     owner: root
     group: root
@@ -10,6 +21,12 @@
 - name: Create scripts folder
   file:
       path: /root/scripts
+      state: directory
+      mode: '0755'
+
+- name: Create config templates folder
+  file:
+      path: /root/scripts/conf_templates
       state: directory
       mode: '0755'
 
@@ -28,8 +45,14 @@
     owner: root
     group: root
     mode: '0755'
-    backup: yes
 
+- name: Copy wordpress installation script
+  copy:
+    src: scripts/install_wp.sh
+    dest: /root/scripts/install_wp.sh
+    owner: root
+    group: root
+    mode: '0755'
 
 - name: Copy fpm conf template
   copy:
@@ -38,7 +61,6 @@
     owner: root
     group: root
     mode: '0644'
-    backup: yes
 
 - name: Copy nginx precert conf template
   copy:
@@ -47,8 +69,6 @@
     owner: root
     group: root
     mode: '0644'
-    backup: yes
-
 
 - name: Copy nginx final conf template
   copy:
@@ -57,6 +77,4 @@
     owner: root
     group: root
     mode: '0644'
-    backup: yes
-
 

@@ -9,8 +9,9 @@
     - mysql-client
 
 - name: Set default mysql config
+  when: ansible_os_family == 'Debian'
   copy:
-    src: config/mysql/mysqld.cnf
+    src: config/mysql/mysqld_debian.cnf
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
     owner: root
     group: root
@@ -18,6 +19,7 @@
     backup: yes
 
 - name: Restart mysql
+  when: ansible_os_family == 'Debian'
   systemd:
     name: mysql
     state: restarted

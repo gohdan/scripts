@@ -18,7 +18,7 @@ fi
 function print_help()
 {
   echo "Add site (nginx, php-fpm configs, mysql db and user)"
-  echo "Usage: `basename $0` username domainname"
+  echo "Usage: `basename $0` username domainname ip"
   echo "Params:"
   echo "  -h, --help - this help"
   echo "  -v, --verbose - verbose output (write not only to log but on terminal)"
@@ -51,6 +51,18 @@ IF_HELP=0
 IF_STOP=0
 USER_NAME=""
 DOMAIN_NAME=""
+IP=""
+
+if [ -e /etc/redhat-release ]
+then
+	GROUP=nginx
+	FPM_PATH=/etc/opt/remi/php71/php-fpm.d
+	FPM_SERVICE=php71-php-fpm
+else
+	GROUP=www-data
+	FPM_PATH=/etc/php/7.1/fpm/pool.d
+	FPM_SERVICE=php7.1-fpm
+fi
 
 debug ""
 debug "===================================="
@@ -79,6 +91,11 @@ then
     DOMAIN_NAME="${ARGS[2]}"
 fi
 
+if [ "" != "${ARGS[3]}" ]
+then
+    IP="${ARGS[3]}"
+fi
+
 if [ "1" == ${IF_HELP} ]
 then
     print_help
@@ -99,10 +116,16 @@ then
     exit 1
 fi
 
+if [ "" == "${IP}" ]
+then
+    debug "Error: no IP given"
+fi
+
 debug "user name: "${USER_NAME}
 debug "domain name: "${DOMAIN_NAME}
+debug "ip: "${IP}
 
-useradd -g www-data -m -s /bin/bash ${USER_NAME}
+useradd -g ${GROUP} -m -s /bin/bash ${USER_NAME}
 
 user_password=`apg -M SNCL -m 14 -x 14 -n 1`
 debug "password: "${user_password}
@@ -110,17 +133,18 @@ echo "${USER_NAME}:${user_password}" | chpasswd
 
 mkdir /home/${USER_NAME}/{www,logs,temp}
 echo "<?php echo (\$_SERVER['HTTP_HOST']); phpinfo(); ?>" > /home/${USER_NAME}/www/index.php
-chown -R ${USER_NAME}:www-data /home/${USER_NAME}/
+chown -R ${USER_NAME}:${GROUP} /home/${USER_NAME}/
 chmod -R a+r /home/${USER_NAME}/
 find /home/${USER_NAME}/ -type d -exec chmod a+x {} \;
 
 # Write php-fpm config
 
-config_file="/etc/php/7.1/fpm/pool.d/${DOMAIN_NAME}.conf"
+config_file="${FPM_PATH}/${DOMAIN_NAME}.conf"
 cp ${DIR}/conf_templates/fpm.conf ${config_file}
 sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file
+sed -i "s/##GROUP##/${GROUP}/g" $config_file
 sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file
-systemctl restart php7.1-fpm
+systemctl restart ${FPM_SERVICE}
 
 # Write nginx simple config
 
@@ -129,6 +153,10 @@ config_file="/etc/nginx/sites-available/${DOMAIN_NAME}.conf"
 cp ${DIR}/conf_templates/nginx_template_precert.conf ${config_file}
 sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file
 sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file
+if [ "" != "${IP}" ]
+then
+	sed -i "s/##IP##/${IP}:/g" $config_file
+fi
 
 ln -s ${config_file} /etc/nginx/sites-enabled/${DOMAIN_NAME}.conf
 systemctl restart nginx
@@ -142,6 +170,10 @@ certbot certonly -n --webroot -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME} -w /home/$
 cp ${DIR}/conf_templates/nginx_template_ssl.conf ${config_file}
 sed -i "s/##USER_NAME##/${USER_NAME}/g" $config_file
 sed -i "s/##DOMAIN_NAME##/${DOMAIN_NAME}/g" $config_file
+if [ "" != "${IP}" ]
+then
+	sed -i "s/##IP##/${IP}:/g" $config_file
+fi
 systemctl restart nginx
 
 
@@ -170,7 +202,6 @@ echo ''
 
 
 debug "end"
-DT=`date "+%Y-%m-%d_%H-%M"`
 debug ${DT}
 
 IFS=$ORIGIFS

@@ -4,6 +4,12 @@
     name: certbot
     state: present
 
+- name: Install certbot package
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name: certbot
+    state: present
+
 - name: Create scripts folder
   file:
       path: /root/scripts
@@ -28,5 +34,6 @@
     state: link
     force: yes
 
-- name: Register account
-  shell: certbot register -n --agree-tos -m admin@example.org
+- name: Register account (if not exist)
+  shell: if [ ! "$(ls -A /etc/letsencrypt/accounts)" ]; then certbot register -n --agree-tos -m admin@localhost; fi
+

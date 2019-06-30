@@ -2,11 +2,18 @@
   hosts: all
   become: yes
   become_user: root
+
   tasks:
     - import_tasks: tasks/make_swap.yml
-    - import_tasks: tasks/set_locale.yml
     - import_tasks: tasks/set_localtime.yml
-    - import_tasks: tasks/update_scripts.yml
-    - import_tasks: tasks/packages_update_cache.yml
-    - import_tasks: tasks/packages_install.yml
-    
+
+    - import_tasks: tasks/set_locale_debian.yml
+      when: ansible_os_family == 'Debian'
+    - import_tasks: tasks/packages_update_cache_debian.yml
+      when: ansible_os_family == 'Debian'
+    - import_tasks: tasks/packages_install_debian.yml
+      when: ansible_os_family == 'Debian'
+
+    - import_tasks: tasks/packages_install_redhat.yml
+      when: ansible_os_family == 'RedHat'
+

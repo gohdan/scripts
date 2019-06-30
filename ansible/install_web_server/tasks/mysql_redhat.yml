@@ -1,0 +1,32 @@
+- name: Install mysql packages (RedHat)
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - mariadb
+    - mariadb-server
+
+- name: Set default mysql config (RedHat)
+  when: ansible_os_family == 'RedHat'
+  copy:
+    src: config/mysql/mysqld_redhat.cnf
+    dest: /etc/my.cnf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Create mysql log directory (RedHat)
+  when: ansible_os_family == 'RedHat'
+  file:
+    path: /var/log/mysql/
+    state: directory
+    owner: mysql
+
+- name: Restart mysql (RedHat)
+  when: ansible_os_family == 'RedHat'
+  systemd:
+    name: mariadb
+    state: restarted

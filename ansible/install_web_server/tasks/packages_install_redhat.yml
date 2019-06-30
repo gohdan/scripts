@@ -1,0 +1,34 @@
+- name: Add epel repository (RedHat)
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+- name: Check packages and install missing (RedHat)
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - apg
+    - bzip2
+    - ftp
+    - git
+    - htop
+    - iotop
+    - logrotate
+    - man-db
+    - mc
+    - ncdu
+    - p7zip
+    - fuse-sshfs
+    - sudo
+    - sysstat
+    - telnet
+    - tmux
+    - vim
+    - wget
+    - zip
+    - unzip
+    - yum-utils

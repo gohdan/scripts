@@ -1,0 +1,5 @@
+- name: Ensure that russian locale exists (Debian)
+  when: ansible_os_family == 'Debian'
+  locale_gen:
+    name: ru_RU.UTF-8
+    state: present

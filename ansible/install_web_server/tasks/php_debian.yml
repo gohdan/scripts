@@ -1,13 +1,14 @@
-- name: Add php repository
+- name: Add php repository (Debian)
+  when: ansible_os_family == 'Debian'
   apt_repository:
     repo: "ppa:ondrej/php"
     state: present
 
-- name: Update packages list
-  apt: update_cache=yes
+- name: Update packages list (Debian)
   when: ansible_os_family == 'Debian'
+  apt: update_cache=yes
 
-- name: Install php packages
+- name: Install php packages (Debian)
   when: ansible_os_family == 'Debian'
   apt:
     name: "{{ packages }}"
@@ -29,7 +30,8 @@
         - php7.1-xsl
         - php7.1-zip
 
-- name: Set default php-cli config
+- name: Set default php-cli config (Debian)
+  when: ansible_os_family == 'Debian'
   copy:
     src: config/php/cli/php.ini
     dest: /etc/php/7.1/cli/php.ini
@@ -38,7 +40,8 @@
     mode: '0644'
     backup: yes
 
-- name: Set default php-fpm config
+- name: Set default php-fpm config (Debian)
+  when: ansible_os_family == 'Debian'
   copy:
     src: config/php/fpm/php.ini
     dest: /etc/php/7.1/fpm/php.ini
@@ -47,7 +50,8 @@
     mode: '0644'
     backup: yes
 
-- name: Restart php-fpm
+- name: Restart php-fpm (Debian)
+  when: ansible_os_family == 'Debian'
   systemd:
     name: php7.1-fpm.service
     state: restarted

@@ -6,6 +6,7 @@ ORIGOFS=$OFS
 IFS=$(echo -en "\n\b")
 OFS=$(echo -en "\n\b")
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 LOG="/var/log/scripts/del_site.log"
 DT=`date "+%Y-%m-%d_%H-%M"`
 
@@ -50,6 +51,15 @@ IF_HELP=0
 IF_STOP=0
 USER_NAME=""
 DOMAIN_NAME=""
+
+if [ -e /etc/redhat-release ]
+then
+	FPM_PATH=/etc/opt/remi/php71/php-fpm.d
+	FPM_SERVICE=php71-php-fpm
+else
+	FPM_PATH=/etc/php/7.1/fpm/pool.d
+	FPM_SERVICE=php7.1-fpm
+fi
 
 debug ""
 debug "===================================="
@@ -116,11 +126,10 @@ unlink /etc/nginx/sites-enabled/${DOMAIN_NAME}.conf
 rm /etc/nginx/sites-available/${DOMAIN_NAME}.conf
 systemctl restart nginx
 
-rm /etc/php/7.1/fpm/pool.d/${DOMAIN_NAME}.conf
-systemctl restart php7.1-fpm
+rm ${FPM_PATH}/${DOMAIN_NAME}.conf
+systemctl restart ${FPM_SERVICE}
 
-userdel ${USER_NAME}
-rm -rf /home/${USER_NAME}
+userdel -r ${USER_NAME}
 
 echo "DROP DATABASE IF EXISTS \`${USER_NAME}\`" | mysql -u root
 echo "REVOKE ALL PRIVILEGES, GRANT OPTION FROM '${USER_NAME}'" | mysql -u root
@@ -130,7 +139,6 @@ echo "DROP USER '${USER_NAME}'@'localhost'" | mysql -u root
 
 
 debug "end"
-DT=`date "+%Y-%m-%d_%H-%M"`
 debug ${DT}
 
 IFS=$ORIGIFS

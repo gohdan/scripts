@@ -1,0 +1,6 @@
+#- name: Put scripts directory
+#  copy:
+#      src: /root/ansible/scripts/
+#      dest: /root/scripts/
+#      mode: '755'
+#      backup: yes

@@ -1,0 +1,13 @@
+/home/*/logs/* {
+daily
+missingok
+rotate 14
+compress
+delaycompress
+notifempty
+sharedscripts
+postrotate
+    /bin/kill -USR1 `cat /run/nginx.pid 2>/dev/null` 2>/dev/null || true
+    /bin/kill -SIGUSR1 `cat /var/opt/remi/php71/run/php-fpm/php-fpm.pid 2>/dev/null` 2>/dev/null || true
+endscript
+}

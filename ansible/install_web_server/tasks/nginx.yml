@@ -1,24 +1,55 @@
-- name: Install nginx package
+- name: Install nginx package (Debian)
   when: ansible_os_family == 'Debian'
   apt:
     name: nginx
     state: present
 
-- name: Set default nginx config
+- name: Install nginx package (RedHat)
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name: nginx
+    state: present
+
+- name: Copy default nginx config (Debian)
+  when: ansible_os_family == 'Debian'
   copy:
-    src: config/nginx/nginx.conf
+    src: config/nginx/nginx_debian.conf
     dest: /etc/nginx/nginx.conf
     owner: root
     group: root
     mode: '0644'
     backup: yes
 
-- name: Remove symlink to default site config
+- name: Copy default nginx config (RedHat)
+  when: ansible_os_family == 'RedHat'
+  copy:
+    src: config/nginx/nginx_redhat.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Create directory to available sites configs (RedHat)
+  when: ansible_os_family == 'RedHat'
+  file:
+      path: /etc/nginx/sites-available
+      state: directory
+
+- name: Create directory to enabled sites configs (RedHat)
+  when: ansible_os_family == 'RedHat'
+  file:
+      path: /etc/nginx/sites-enabled
+      state: directory
+
+- name: Remove symlink to default site config (Debian)
+  when: ansible_os_family == 'Debian'
   file:
       path: /etc/nginx/sites-enabled/default
       state: absent
 
-- name: Remove default site config
+- name: Remove default site config (Debian)
+  when: ansible_os_family == 'Debian'
   file:
       path: /etc/nginx/sites-available/default
       state: absent
@@ -48,6 +79,27 @@
   file:
       path: /tmp/wordpress_cache-master
       state: absent
+
+- name: Enable http in firewalld (RedHat)
+  when: ansible_os_family == 'RedHat'
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+    zone: public
+
+- name: Enable https in firewalld (RedHat)
+  when: ansible_os_family == 'RedHat'
+  firewalld:
+    service: https
+    permanent: yes
+    state: enabled
+    zone: public
+
+- name: Restart firewalld (RedHat)
+  systemd:
+    name: firewalld
+    state: restarted
 
 - name: Restart nginx
   systemd:
