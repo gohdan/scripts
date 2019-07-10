@@ -30,3 +30,9 @@
   systemd:
     name: mariadb
     state: restarted
+
+- name: Enable mysql service (RedHat)
+  service:
+    name: mariadb
+    enabled: yes
+

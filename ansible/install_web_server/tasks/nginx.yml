@@ -105,3 +105,9 @@
   systemd:
     name: nginx
     state: restarted
+
+- name: Enable nginx service
+  service:
+    name: nginx
+    enabled: yes
+

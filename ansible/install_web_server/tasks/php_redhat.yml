@@ -60,3 +60,9 @@
   systemd:
     name: php71-php-fpm.service
     state: restarted
+
+- name: Enable php-fpm service (RedHat)
+  service:
+    name: php71-php-fpm
+    enabled: yes
+
