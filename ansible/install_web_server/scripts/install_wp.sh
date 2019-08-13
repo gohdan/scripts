@@ -19,11 +19,19 @@ else
         GROUP=www-data
 fi
 
-/usr/local/bin/wp core download --path=/home/${USER}/www --locale=ru_RU --force
+if [ ! -e /usr/local/bin/wp ]
+then
+    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    chmod +x wp-cli.phar
+    mv wp-cli.phar /usr/local/bin/wp
+fi
 
-/usr/local/bin/wp config create --path=/home/${USER}/www --dbhost=${DBHOST} --dbname=${DBNAME} --dbuser=${DBUSER} --dbpass=${DBPASS}
 
-/usr/local/bin/wp core install --path=/home/${USER}/www --url=https://${DOMAIN} --title=${DOMAIN} --admin_user=${ADMIN_USER} --admin_password="${ADMIN_PASSWORD}" --admin_email="${ADMIN_EMAIL}"
+sudo -u ${USER} -i -- /usr/local/bin/wp core download --path=/home/${USER}/www --locale=ru_RU --force
+
+sudo -u ${USER} -i -- /usr/local/bin/wp config create --path=/home/${USER}/www --dbhost=${DBHOST} --dbname=${DBNAME} --dbuser=${DBUSER} --dbpass=${DBPASS}
+
+sudo -u ${USER} -i -- /usr/local/bin/wp core install --path=/home/${USER}/www --url=https://${DOMAIN} --title=${DOMAIN} --admin_user=${ADMIN_USER} --admin_password="${ADMIN_PASSWORD}" --admin_email="${ADMIN_EMAIL}"
 
 chown -R ${USER}:${GROUP} /home/${USER}/www
 chmod -R a+r /home/${USER}/www
