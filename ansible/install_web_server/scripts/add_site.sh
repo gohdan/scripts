@@ -55,13 +55,20 @@ IP=""
 
 if [ -e /etc/redhat-release ]
 then
-	GROUP=nginx
-	FPM_PATH=/etc/opt/remi/php71/php-fpm.d
-	FPM_SERVICE=php71-php-fpm
+    GROUP=nginx
+
+    if [ -e /etc/opt/remi/php71/php-fpm.d ]
+    then
+        FPM_PATH=/etc/opt/remi/php71/php-fpm.d
+        FPM_SERVICE=php7.1-fpm
+    else
+        FPM_PATH=/etc/php-fpm.d/
+        FPM_SERVICE=php-fpm
+    fi
 else
-	GROUP=www-data
-	FPM_PATH=/etc/php/7.1/fpm/pool.d
-	FPM_SERVICE=php7.1-fpm
+    GROUP=www-data
+    FPM_PATH=/etc/php/7.1/fpm/pool.d
+    FPM_SERVICE=php7.1-fpm
 fi
 
 debug ""
