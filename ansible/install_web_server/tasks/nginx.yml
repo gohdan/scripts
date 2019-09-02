@@ -97,6 +97,7 @@
     zone: public
 
 - name: Restart firewalld (RedHat)
+  when: ansible_os_family == 'RedHat'
   systemd:
     name: firewalld
     state: restarted
