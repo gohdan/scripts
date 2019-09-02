@@ -8,7 +8,6 @@ OFS=$(echo -en "\n\b")
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 LOG="/var/log/scripts/add_site.log"
-DT=`date "+%Y-%m-%d_%H-%M"`
 
 if [ ! -e /var/log/scripts ];
 then
@@ -53,6 +52,12 @@ USER_NAME=""
 DOMAIN_NAME=""
 IP=""
 
+debug ""
+debug "===================================="
+DT=`date "+%Y-%m-%d_%H-%M"`
+debug ${DT}
+debug "start"
+
 if [ -e /etc/redhat-release ]
 then
     GROUP=nginx
@@ -70,15 +75,11 @@ fi
 
 debug "group: ${GROUP}"
 debug "fpm path: ${FPM_PATH}"
-FPM_SERVICE=`systemctl list-unit-files | grep php-fpm | grep enabled | awk '{print $1}'`
+FPM_SERVICE=`systemctl list-unit-files | grep fpm | grep enabled | awk '{print $1}'`
 debug "fpm service: ${FPM_SERVICE}"
 
-debug ""
-debug "===================================="
-debug ${DT}
-debug "start"
 
-count=3
+count=1
 while [ -n "${1}" ]
 do
     case "${1}" in
@@ -128,6 +129,8 @@ fi
 if [ "" == "${IP}" ]
 then
     debug "Error: no IP given"
+    print_help
+    exit 1
 fi
 
 debug "user name: "${USER_NAME}
@@ -211,6 +214,7 @@ echo ''
 
 
 debug "end"
+DT=`date "+%Y-%m-%d_%H-%M"`
 debug ${DT}
 
 IFS=$ORIGIFS
