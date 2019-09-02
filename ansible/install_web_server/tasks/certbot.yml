@@ -35,5 +35,5 @@
     force: yes
 
 - name: Register account (if not exist)
-  shell: if [ ! "$(ls -A /etc/letsencrypt/accounts)" ]; then certbot register -n --agree-tos -m admin@localhost; fi
+  shell: if [ `ls /etc/letsencrypt/accounts/acme-v01.api.letsencrypt.org/directory/ | wc -l` -eq 0 ]; then certbot register -n --agree-tos -m admin@localhost; fi
 
