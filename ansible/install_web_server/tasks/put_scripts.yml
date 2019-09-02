@@ -30,6 +30,12 @@
       state: directory
       mode: '0755'
 
+- name: Create backup scripts folder
+  file:
+      path: /root/scripts/backup
+      state: directory
+      mode: '0755'
+
 - name: Copy site creation scripts
   copy:
     src: scripts/add_site.sh
