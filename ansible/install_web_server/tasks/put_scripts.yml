@@ -78,3 +78,37 @@
     group: root
     mode: '0644'
 
+- name: Copy db backup script
+  copy:
+    src: scripts/backup/backup_db.sh
+    dest: /root/scripts/backup/backup_db.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Make in cron.daily symlink to db backup
+  file:
+      src: '/root/scripts/backup/backup_db.sh'
+      dest: '/etc/cron.daily/backup-db'
+      owner: root
+      group: root
+      state: link
+      mode: '755'
+
+- name: Copy files backup script
+  copy:
+    src: scripts/backup/backup_files.sh
+    dest: /root/scripts/backup/backup_files.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Make in cron.daily symlink to files backup
+  file:
+      src: '/root/scripts/backup/backup_files.sh'
+      dest: '/etc/cron.daily/backup-files'
+      owner: root
+      group: root
+      state: link
+      mode: '755'
+
