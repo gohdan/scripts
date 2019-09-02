@@ -60,23 +60,25 @@ then
     if [ -e /etc/opt/remi/php71/php-fpm.d ]
     then
         FPM_PATH=/etc/opt/remi/php71/php-fpm.d
-        FPM_SERVICE=php7.1-fpm
     else
         FPM_PATH=/etc/php-fpm.d/
-        FPM_SERVICE=php-fpm
     fi
 else
     GROUP=www-data
     FPM_PATH=/etc/php/7.1/fpm/pool.d
-    FPM_SERVICE=php7.1-fpm
 fi
+
+debug "group: ${GROUP}"
+debug "fpm path: ${FPM_PATH}"
+FPM_SERVICE=`systemctl list-unit-files | grep php-fpm | grep enabled | awk '{print $1}'`
+debug "fpm service: ${FPM_SERVICE}"
 
 debug ""
 debug "===================================="
 debug ${DT}
 debug "start"
 
-count=1
+count=3
 while [ -n "${1}" ]
 do
     case "${1}" in
