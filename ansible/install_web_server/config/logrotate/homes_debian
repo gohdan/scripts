@@ -1,4 +1,4 @@
-/home/*/logs/* {
+/home/*/logs/*.log {
         daily
         missingok
         rotate 14
