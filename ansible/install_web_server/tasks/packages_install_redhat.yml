@@ -4,11 +4,17 @@
     description: EPEL YUM repo
     baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
 
+- name: Import Fedora GPG keys (needed for epel)
+  rpm_key:
+    state: present
+    key: https://getfedora.org/static/fedora.gpg
+
 - name: Check packages and install missing (RedHat)
   when: ansible_os_family == 'RedHat'
   yum:
     name: "{{ packages }}"
     state: present
+    disable_gpg_check: yes
   vars:
     packages:
     - apg
