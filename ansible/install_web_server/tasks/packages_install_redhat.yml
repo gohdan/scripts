@@ -28,6 +28,7 @@
     - mc
     - ncdu
     - p7zip
+    - psmisc
     - fuse-sshfs
     - sudo
     - sysstat
