@@ -6,7 +6,7 @@
 
 - name: Enable remi php 7.1 repository (RedHat)
   when: ansible_os_family == 'RedHat'
-  command: yum-config-manager --enable remi-php71
+  command: yum-config-manager --enable remi-php73
 
 - name: Install php packages (RedHat)
   when: ansible_os_family == 'RedHat'
@@ -15,24 +15,24 @@
     state: present
   vars:
     packages:
-        - php71-php-bcmath
-        - php71-php-cli
-        - php71-php-common
-        - php71-php-fpm
-        - php71-php-gd
-        - php71-php-intl
-        - php71-php-json
-        - php71-php-mbstring
-        - php71-php-mcrypt
-        - php71-php-mysql
-        - php71-php-opcache
-        - php71-php-xml
-        - php71-php-xsl
-        - php71-php-zip
+        - php73-php-bcmath
+        - php73-php-cli
+        - php73-php-common
+        - php73-php-fpm
+        - php73-php-gd
+        - php73-php-intl
+        - php73-php-json
+        - php73-php-mbstring
+        - php73-php-mcrypt
+        - php73-php-mysql
+        - php73-php-opcache
+        - php73-php-xml
+        - php73-php-xsl
+        - php73-php-zip
 
 - name: Make symlink to php cli
   file:
-    src: '/opt/remi/php71/root/usr/bin/php'
+    src: '/opt/remi/php73/root/usr/bin/php'
     dest: '/usr/bin/php'
     owner: root
     group: root
@@ -43,7 +43,7 @@
   when: ansible_os_family == 'RedHat'
   copy:
     src: config/php/fpm/php.ini
-    dest: /etc/opt/remi/php71/php.ini
+    dest: /etc/opt/remi/php73/php.ini
     owner: root
     group: root
     mode: '0644'
@@ -58,11 +58,11 @@
 - name: Restart php-fpm (RedHat)
   when: ansible_os_family == 'RedHat'
   systemd:
-    name: php71-php-fpm.service
+    name: php73-php-fpm.service
     state: restarted
 
 - name: Enable php-fpm service (RedHat)
   service:
-    name: php71-php-fpm
+    name: php73-php-fpm
     enabled: yes
 
