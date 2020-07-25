@@ -33,7 +33,7 @@
   when: ansible_os_family == 'Debian'
   copy:
     src: config/php/cli/php.ini
-    dest: /etc/php/7.1/cli/php.ini
+    dest: /etc/php/7.3/cli/php.ini
     owner: root
     group: root
     mode: '0644'
@@ -43,7 +43,7 @@
   when: ansible_os_family == 'Debian'
   copy:
     src: config/php/fpm/php.ini
-    dest: /etc/php/7.1/fpm/php.ini
+    dest: /etc/php/7.3/fpm/php.ini
     owner: root
     group: root
     mode: '0644'
