@@ -60,16 +60,9 @@ table_open_cache=4096
 
 sort_buffer_size=8M
 read_buffer_size=16M
-query_cache_size=64M
-query_cache_type=1
 tmp_table_size=32m
 join_buffer_size = 2M
 
-# * Query Cache Configuration
-#
-query_cache_limit	= 1M
-query_cache_size        = 16M
-#
 # * Logging and Replication
 #
 # Both location gets rotated by the cronjob.
@@ -86,7 +79,8 @@ log_error = /var/log/mysql/error.log
 #log_slow_queries	= /var/log/mysql/mysql-slow.log
 #long_query_time = 2
 #log-queries-not-using-indexes
-slow_query_log          = /var/log/mysql/slow.log
+slow_query_log          = 1
+slow_query_log_file     = /var/log/mysql/slow.log
 long_query_time         = 5
 
 # The following can be used as easy to replay backup logs or for replication.
@@ -94,7 +88,7 @@ long_query_time         = 5
 #       other settings you may need to change.
 #server-id		= 1
 #log_bin			= /var/log/mysql/mysql-bin.log
-expire_logs_days	= 10
+binlog_expire_logs_seconds = 259200
 max_binlog_size   = 100M
 #binlog_do_db		= include_database_name
 #binlog_ignore_db	= include_database_name
