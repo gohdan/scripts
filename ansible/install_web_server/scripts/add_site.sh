@@ -193,7 +193,9 @@ systemctl restart nginx
 
 mysqlpasswd=`apg -M SNCL -m 14 -x 14 -n 1`
 debug "MySQL password: "$mysqlpasswd
-echo "CREATE DATABASE \`${USER_NAME}\`; GRANT ALL ON \`${USER_NAME}\`.* TO '${USER_NAME}'@'localhost' IDENTIFIED BY '${mysqlpasswd}'" | mysql -u root
+echo "CREATE DATABASE \`${USER_NAME}\`;" | mysql -u root
+echo "CREATE USER '${USER_NAME}'@'localhost' IDENTIFIED BY '${mysqlpasswd}'" | mysql -u root
+echo "GRANT ALL ON \`${USER_NAME}\`.* TO '${USER_NAME}'@'localhost'" | mysql -u root
 
 # === Summary ===
 
