@@ -199,21 +199,18 @@ echo "GRANT ALL ON \`${USER_NAME}\`.* TO '${USER_NAME}'@'localhost'" | mysql -u 
 
 # === Summary ===
 
-echo ''
-echo "=== ${DOMAIN_NAME} ==="
-echo ''
-echo '=== SSH ==='
-echo "host: "${DOMAIN_NAME}
-echo "user: "${USER_NAME}
-echo "pass: "${user_password}
-echo ''
-echo "=== MySQL ==="
-echo "host: localhost"
-echo "base: "${USER_NAME}
-echo "user: "${USER_NAME}
-echo "pass: "$mysqlpasswd
-echo ''
-
+echo "=== ${DOMAIN_NAME} ===" | tee -a /home/${USER_NAME}/access.txt
+echo '' | tee -a /home/${USER_NAME}/access.txt
+echo '=== SSH ===' | tee -a /home/${USER_NAME}/access.txt
+echo "host: "${DOMAIN_NAME} | tee -a /home/${USER_NAME}/access.txt
+echo "user: "${USER_NAME} | tee -a /home/${USER_NAME}/access.txt
+echo "pass: "${user_password} | tee -a /home/${USER_NAME}/access.txt
+echo '' | tee -a /home/${USER_NAME}/access.txt
+echo "=== MySQL ===" | tee -a /home/${USER_NAME}/access.txt
+echo "host: localhost" | tee -a /home/${USER_NAME}/access.txt
+echo "base: "${USER_NAME} | tee -a /home/${USER_NAME}/access.txt
+echo "user: "${USER_NAME} | tee -a /home/${USER_NAME}/access.txt
+echo "pass: "$mysqlpasswd | tee -a /home/${USER_NAME}/access.txt
 
 debug "end"
 DT=`date "+%Y-%m-%d_%H-%M"`
