@@ -62,9 +62,9 @@ if [ -e /etc/redhat-release ]
 then
     GROUP=nginx
 
-    if [ -e /etc/opt/remi/php71/php-fpm.d ]
+    if [ -e /etc/opt/remi/php73/php-fpm.d ]
     then
-        FPM_PATH=/etc/opt/remi/php71/php-fpm.d
+        FPM_PATH=/etc/opt/remi/php73/php-fpm.d
     else
         FPM_PATH=/etc/php-fpm.d/
     fi
