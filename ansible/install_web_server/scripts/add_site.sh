@@ -70,7 +70,7 @@ then
     fi
 else
     GROUP=www-data
-    FPM_PATH=/etc/php/7.1/fpm/pool.d
+    FPM_PATH=/etc/php/7.3/fpm/pool.d
 fi
 
 debug "group: ${GROUP}"
