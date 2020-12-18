@@ -139,7 +139,7 @@ debug "ip: "${IP}
 
 useradd -g ${GROUP} -m -s /bin/bash ${USER_NAME}
 
-user_password=`apg -M SNCL -m 14 -x 14 -n 1`
+user_password=`apg -M NL -a 1 -m 16 -x 16 -n 1`
 debug "password: "${user_password}
 echo "${USER_NAME}:${user_password}" | chpasswd
 
@@ -191,7 +191,7 @@ systemctl restart nginx
 
 # === MySQL ===
 
-mysqlpasswd=`apg -M SNCL -m 14 -x 14 -n 1`
+mysqlpasswd=`apg -M NL -a 1 -m 16 -x 16 -n 1`
 debug "MySQL password: "$mysqlpasswd
 echo "CREATE DATABASE \`${USER_NAME}\`;" | mysql -u root
 echo "CREATE USER '${USER_NAME}'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysqlpasswd}'" | mysql -u root
