@@ -39,6 +39,51 @@
     state: link
     mode: '755'
 
+- name: Make symlink to remi php.d
+  file:
+    src: '/etc/opt/remi/php73/php.d'
+    dest: '/etc/php.d'
+    owner: root
+    group: root
+    state: link
+    mode: '755'
+
+- name: Make symlink to remi php-fpm.conf
+  file:
+    src: '/etc/opt/remi/php73/php-fpm.conf'
+    dest: '/etc/php-fpm.conf'
+    owner: root
+    group: root
+    state: link
+    mode: '755'
+
+- name: Make symlink to remi php-fpm.d
+  file:
+    src: '/etc/opt/remi/php73/php-fpm.d'
+    dest: '/etc/php-fpm.d'
+    owner: root
+    group: root
+    state: link
+    mode: '755'
+
+- name: Make symlink to remi php.ini
+  file:
+    src: '/etc/opt/remi/php73/php.ini'
+    dest: '/etc/php.ini'
+    owner: root
+    group: root
+    state: link
+    mode: '755'
+
+
+
+
+
+
+
+
+
+
 - name: Set default php config (RedHat)
   when: ansible_os_family == 'RedHat'
   copy:

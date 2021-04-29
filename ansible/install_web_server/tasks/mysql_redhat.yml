@@ -8,11 +8,23 @@
     - mariadb
     - mariadb-server
 
+- name: Start mysql (RedHat)
+  when: ansible_os_family == 'RedHat'
+  systemd:
+    name: mariadb
+    state: started
+
+- name: Remove main config if exists
+  when: ansible_os_family == 'RedHat'
+  file:
+      path: /etc/my.cnf
+      state: absent
+
 - name: Set default mysql config (RedHat)
   when: ansible_os_family == 'RedHat'
   copy:
     src: config/mysql/mysqld_redhat.cnf
-    dest: /etc/my.cnf
+    dest: /etc/my.cnf.d/server.cnf
     owner: root
     group: root
     mode: '0644'

@@ -7,14 +7,14 @@
     - import_tasks: tasks/nginx.yml
 
     - import_tasks: tasks/php_debian.yml
-      when: ansible_os_family == 'Debian'
+        when: ansible_os_family == 'Debian'
     - import_tasks: tasks/php_redhat.yml
-      when: ansible_os_family == 'RedHat'
+        when: ansible_os_family == 'RedHat'
 
     - import_tasks: tasks/mysql_debian.yml
-      when: ansible_os_family == 'Debian'
+        when: ansible_os_family == 'Debian'
     - import_tasks: tasks/mysql_redhat.yml
-      when: ansible_os_family == 'RedHat'
+        when: ansible_os_family == 'RedHat'
 
     - import_tasks: tasks/put_scripts.yml
     - import_tasks: tasks/certbot.yml

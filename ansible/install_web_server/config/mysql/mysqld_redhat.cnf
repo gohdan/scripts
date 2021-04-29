@@ -86,7 +86,8 @@ log_error = /var/log/mysql/error.log
 #log_slow_queries	= /var/log/mysql/mysql-slow.log
 #long_query_time = 2
 #log-queries-not-using-indexes
-slow_query_log          = /var/log/mysql/slow.log
+slow_query_log          = 1
+slow_query_log_file     = '/var/log/mysql/slow.log'
 long_query_time         = 5
 
 # The following can be used as easy to replay backup logs or for replication.
