@@ -1,8 +1,8 @@
-- name: Add php repository (Debian)
-  when: ansible_os_family == 'Debian'
-  apt_repository:
-    repo: "ppa:ondrej/php"
-    state: present
+#- name: Add php repository (Debian)
+#  when: ansible_os_family == 'Debian'
+#  apt_repository:
+#    repo: "ppa:ondrej/php"
+#    state: present
 
 - name: Update packages list (Debian)
   when: ansible_os_family == 'Debian'
