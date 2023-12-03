@@ -20,6 +20,8 @@
     - git
     - htop
     - iotop
+    - less
+    - locales
     - logrotate
     - man-db
     - mc
