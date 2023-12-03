@@ -15,26 +15,25 @@
     state: present
   vars:
     packages:
-        - php7.3-bcmath
-        - php7.3-cli
-        - php7.3-common
-        - php7.3-curl
-        - php7.3-fpm
-        - php7.3-gd
-        - php7.3-intl
-        - php7.3-json
-        - php7.3-mbstring
-        - php7.3-mysql
-        - php7.3-opcache
-        - php7.3-xml
-        - php7.3-xsl
-        - php7.3-zip
+        - php8.1-bcmath
+        - php8.1-cli
+        - php8.1-common
+        - php8.1-curl
+        - php8.1-fpm
+        - php8.1-gd
+        - php8.1-intl
+        - php8.1-mbstring
+        - php8.1-mysql
+        - php8.1-opcache
+        - php8.1-xml
+        - php8.1-xsl
+        - php8.1-zip
 
 - name: Set default php-cli config (Debian)
   when: ansible_os_family == 'Debian'
   copy:
     src: config/php/cli/php.ini
-    dest: /etc/php/7.3/cli/php.ini
+    dest: /etc/php/8.1/cli/php.ini
     owner: root
     group: root
     mode: '0644'
@@ -44,7 +43,7 @@
   when: ansible_os_family == 'Debian'
   copy:
     src: config/php/fpm/php.ini
-    dest: /etc/php/7.3/fpm/php.ini
+    dest: /etc/php/8.1/fpm/php.ini
     owner: root
     group: root
     mode: '0644'
@@ -53,5 +52,5 @@
 - name: Restart php-fpm (Debian)
   when: ansible_os_family == 'Debian'
   systemd:
-    name: php7.3-fpm.service
+    name: php8.1-fpm.service
     state: restarted

@@ -1,12 +1,12 @@
 - name: Add Remi php repository (RedHat)
   when: ansible_os_family == 'RedHat'
   yum: 
-    name: https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
     state: present
 
-- name: Enable remi php 7.3 repository (RedHat)
+- name: Enable remi php 8.1 repository (RedHat)
   when: ansible_os_family == 'RedHat'
-  command: yum-config-manager --enable remi-php73
+  command: yum-config-manager --enable remi-php81
 
 - name: Install php packages (RedHat)
   when: ansible_os_family == 'RedHat'
@@ -15,24 +15,24 @@
     state: present
   vars:
     packages:
-        - php73-php-bcmath
-        - php73-php-cli
-        - php73-php-common
-        - php73-php-fpm
-        - php73-php-gd
-        - php73-php-intl
-        - php73-php-json
-        - php73-php-mbstring
-        - php73-php-mcrypt
-        - php73-php-mysql
-        - php73-php-opcache
-        - php73-php-xml
-        - php73-php-xsl
-        - php73-php-zip
+        - php81-php-bcmath
+        - php81-php-cli
+        - php81-php-common
+        - php81-php-fpm
+        - php81-php-gd
+        - php81-php-intl
+        - php81-php-json
+        - php81-php-mbstring
+        - php81-php-mcrypt
+        - php81-php-mysql
+        - php81-php-opcache
+        - php81-php-xml
+        - php81-php-xsl
+        - php81-php-zip
 
 - name: Make symlink to php cli
   file:
-    src: '/opt/remi/php73/root/usr/bin/php'
+    src: '/opt/remi/php81/root/usr/bin/php'
     dest: '/usr/bin/php'
     owner: root
     group: root
@@ -41,7 +41,7 @@
 
 - name: Make symlink to remi php.d
   file:
-    src: '/etc/opt/remi/php73/php.d'
+    src: '/etc/opt/remi/php81/php.d'
     dest: '/etc/php.d'
     owner: root
     group: root
@@ -50,7 +50,7 @@
 
 - name: Make symlink to remi php-fpm.conf
   file:
-    src: '/etc/opt/remi/php73/php-fpm.conf'
+    src: '/etc/opt/remi/php81/php-fpm.conf'
     dest: '/etc/php-fpm.conf'
     owner: root
     group: root
@@ -59,7 +59,7 @@
 
 - name: Make symlink to remi php-fpm.d
   file:
-    src: '/etc/opt/remi/php73/php-fpm.d'
+    src: '/etc/opt/remi/php81/php-fpm.d'
     dest: '/etc/php-fpm.d'
     owner: root
     group: root
@@ -68,7 +68,7 @@
 
 - name: Make symlink to remi php.ini
   file:
-    src: '/etc/opt/remi/php73/php.ini'
+    src: '/etc/opt/remi/php81/php.ini'
     dest: '/etc/php.ini'
     owner: root
     group: root
@@ -88,7 +88,7 @@
   when: ansible_os_family == 'RedHat'
   copy:
     src: config/php/fpm/php.ini
-    dest: /etc/opt/remi/php73/php.ini
+    dest: /etc/opt/remi/php81/php.ini
     owner: root
     group: root
     mode: '0644'
@@ -103,11 +103,11 @@
 - name: Restart php-fpm (RedHat)
   when: ansible_os_family == 'RedHat'
   systemd:
-    name: php73-php-fpm.service
+    name: php81-php-fpm.service
     state: restarted
 
 - name: Enable php-fpm service (RedHat)
   service:
-    name: php73-php-fpm
+    name: php81-php-fpm
     enabled: yes
 
