@@ -5,8 +5,8 @@
     state: present
   vars:
     packages:
-    - mysql-server
-    - mysql-client
+    - mariadb-server
+    - mariadb-client
 
 - name: Set default mysql config
   when: ansible_os_family == 'Debian'
