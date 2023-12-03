@@ -12,7 +12,7 @@
   when: ansible_os_family == 'Debian'
   copy:
     src: config/mysql/mysqld_debian.cnf
-    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    dest: /etc/mysql/mariadb.conf.d/50-server.cnf
     owner: root
     group: root
     mode: '0644'
