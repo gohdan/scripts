@@ -60,32 +60,6 @@
       path: /etc/nginx/sites-available/default
       state: absent
 
-- name: Get wordpess config
-  unarchive:
-    remote_src: yes
-    src: https://github.com/gohdan/wordpress_cache/archive/master.zip
-    dest: /tmp/
-
-- name: Check if wordpress config dir exist
-  stat: path=/tmp/wordpress_cache-master/nginx/wordpress_cache
-  register: wc_cache_stat
-
-- name: Create wordpress cache folder
-  when: wc_cache_stat.stat.exists
-  file:
-      path: /etc/nginx/wordpress_cache
-      state: directory
-      mode: '0755'
-
-- name: Move wordpress cache to nginx folder
-  when: wc_cache_stat.stat.exists
-  shell: mv -b /tmp/wordpress_cache-master/nginx/wordpress_cache/* /etc/nginx/wordpress_cache
-
-- name: Remove wordpress cache config
-  file:
-      path: /tmp/wordpress_cache-master
-      state: absent
-
 - name: Enable http in firewalld (RedHat)
   when: ansible_os_family == 'RedHat'
   firewalld:
