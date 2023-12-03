@@ -75,15 +75,6 @@
     state: link
     mode: '755'
 
-
-
-
-
-
-
-
-
-
 - name: Set default php config (RedHat)
   when: ansible_os_family == 'RedHat'
   copy:
