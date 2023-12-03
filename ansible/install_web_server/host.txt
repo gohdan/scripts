@@ -1,1 +1,1 @@
-new_server ansible_host=xx.xx.xx.xx ansible_user=root
+new_server ansible_host=xx.xx.xx.xx ansible_user=root ansible_port=22
