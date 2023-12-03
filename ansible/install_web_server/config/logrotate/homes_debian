@@ -14,6 +14,6 @@
         endscript
         postrotate
                 invoke-rc.d nginx rotate >/dev/null 2>&1
-				/usr/lib/php/php7.1-fpm-reopenlogs
+				/usr/lib/php/php8.1-fpm-reopenlogs
         endscript
 }
