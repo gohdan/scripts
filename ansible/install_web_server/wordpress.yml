@@ -1,0 +1,8 @@
+- name: Install wordpress configs and cli
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - import_tasks: tasks/install_wordpress_configs.yml
+    - import_tasks: tasks/packages_update_cache_debian.yml
+    - import_tasks: tasks/install_wp-cli.yml
