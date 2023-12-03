@@ -18,4 +18,4 @@
 
     - import_tasks: tasks/put_scripts.yml
     - import_tasks: tasks/certbot.yml
-    - import_tasks: tasks/install_wp-cli.yml
+
