@@ -1,0 +1,3 @@
+workdir: /home/user/ansible/install_web_server
+domain: foo.bar
+admin_email: admin@foo.bar
