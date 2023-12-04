@@ -54,11 +54,11 @@ DOMAIN_NAME=""
 
 if [ -e /etc/redhat-release ]
 then
-	FPM_PATH=/etc/opt/remi/php71/php-fpm.d
-	FPM_SERVICE=php71-php-fpm
+	FPM_PATH=/etc/opt/remi/php81/php-fpm.d
+	FPM_SERVICE=php81-php-fpm
 else
-	FPM_PATH=/etc/php/7.1/fpm/pool.d
-	FPM_SERVICE=php7.1-fpm
+	FPM_PATH=/etc/php/8.1/fpm/pool.d
+	FPM_SERVICE=php8.1-fpm
 fi
 
 debug ""

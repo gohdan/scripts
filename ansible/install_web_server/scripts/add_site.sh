@@ -62,15 +62,15 @@ if [ -e /etc/redhat-release ]
 then
     GROUP=nginx
 
-    if [ -e /etc/opt/remi/php71/php-fpm.d ]
+    if [ -e /etc/opt/remi/php81/php-fpm.d ]
     then
-        FPM_PATH=/etc/opt/remi/php71/php-fpm.d
+        FPM_PATH=/etc/opt/remi/php81/php-fpm.d
     else
         FPM_PATH=/etc/php-fpm.d/
     fi
 else
     GROUP=www-data
-    FPM_PATH=/etc/php/7.1/fpm/pool.d
+    FPM_PATH=/etc/php/8.1/fpm/pool.d
 fi
 
 debug "group: ${GROUP}"
